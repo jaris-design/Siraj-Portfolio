@@ -1,0 +1,489 @@
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Hide default cursor */
+html, body, a, button, .portfolio-box, .filter-btn {
+    cursor: none !important;
+}
+
+/* -----------------------------------------------------------
+   CUSTOM CURSOR (Static)
+----------------------------------------------------------- */
+
+/* Hide default cursor on all elements */
+html, body, a, button, .portfolio-box, .filter-btn {
+    cursor: none !important;
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px; 
+    height: 24px;
+    color: var(--primary-orange); /* Arrow color */
+    pointer-events: none; /* Allows clicks to go through the arrow */
+    z-index: 9999;
+    
+    /* Center the SVG inside the div */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* REMOVED: transition, transform: scale, and animation properties */
+}
+
+/*:root {
+    --primary-orange: #2B81E4;
+    --sidebar-bg: #dee2e6;
+    --bg-light: #ffffff;
+    --bg-medium: #fafafa;
+    --text-dark: #1a1a1a;
+    --text-grey: #666666;
+    --sidebar-width: 300px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    background-color: var(--bg-light);
+} */
+
+:root {
+    /* New Gradient Colors */
+    --gradient-start: #83D0CB;
+    --gradient-end: #003F88;
+    --primary-gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    
+    /* Solid Fallback (Using the blue tone) */
+    --primary-orange: #003f88; 
+
+    --sidebar-bg: #dee2e6;
+    --bg-light: #ffffff;
+    --bg-medium: #fafafa;
+    --text-dark: #1a1a1a;
+    --text-grey: #666666;
+    --sidebar-width: 300px;
+}
+
+/* Utility class for Gradient Text */
+.text-gradient {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+
+/* -----------------------------------------------------------
+   SIDEBAR STYLES (Fixed Left)
+----------------------------------------------------------- */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: rgba(233, 236, 239, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    overflow-y: auto;
+    z-index: 1050; 
+    padding: 40px 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Profile Area */
+.profile-section { margin-bottom: 30px; }
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    background-color: #ddd; 
+    border: 5px solid rgba(255,255,255,0.5);
+}
+.profile-name { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    margin-bottom: 10px; 
+    line-height: 1.2; 
+}
+.profile-name a { color: var(--text-dark); text-decoration: none; }
+
+.profile-role { 
+    font-size: 0.8rem; 
+    letter-spacing: 1px; 
+    color: var(--primary-orange); 
+    text-transform: uppercase; 
+    margin-bottom: 20px; 
+    display: block; 
+    font-weight: 500;
+}
+
+/* Navigation Links */
+#sidebar ul { list-style: none; padding: 0; margin: 0; }
+#sidebar ul li { margin-bottom: 12px; }
+#sidebar .nav-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 5px 0;
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+#sidebar .nav-link:hover, 
+#sidebar .nav-link.active {
+    color: var(--primary-orange);
+    border-bottom: 1px solid var(--primary-orange);
+} 
+
+/* Sidebar Footer */
+.sidebar-footer { font-size: 12px; color: #999; margin-top: 30px; }
+.social-icons-sidebar a { color: var(--text-dark); margin: 0 5px; transition: 0.3s; }
+.social-icons-sidebar a:hover { color: var(--primary-orange); }
+
+/* -----------------------------------------------------------
+   MAIN CONTENT WRAPPER
+----------------------------------------------------------- */
+#main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* -----------------------------------------------------------
+   FULL SCREEN SECTIONS
+----------------------------------------------------------- */
+section { 
+    min-height: 100vh; 
+    padding: 60px 50px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Typography & Alignment Updates */
+h2.section-title { 
+    font-weight: 700; 
+    font-size: 2.5rem; 
+    margin-bottom: 1.5rem; 
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left; /* Changed to left align */
+}
+
+p.section-desc { 
+    color: var(--text-grey); 
+    max-width: 100%; 
+    margin: 0 0 40px 0; /* Changed margin to align left */
+    text-align: left;   /* Changed to left align */
+    line-height: 1.7; 
+}
+
+.hero-small { font-size: 1.2rem; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+.hero-name { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; }
+.hero-text { color: var(--text-grey); margin-bottom: 35px; font-size: 1.1rem; max-width: 100%; line-height: 1.8; }
+
+/* Buttons */
+/* .btn-custom-orange {
+    background-color: var(--primary-orange); color: white; padding: 12px 30px;
+    font-weight: 600; border: 2px solid var(--primary-orange); text-transform: uppercase;
+    border-radius: 0; transition: all 0.3s ease; letter-spacing: 1px;
+} */
+
+/* 4. Primary Button */
+.btn-custom-orange {
+    background-image: var(--primary-gradient); /* Use Image for gradient */
+    color: white; 
+    padding: 12px 30px;
+    font-weight: 600; 
+    border: none; /* Remove border to avoid conflict */
+    text-transform: uppercase;
+    border-radius: 6px; /* Slight radius looks better with gradients */
+    transition: all 0.3s ease; 
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+/* .btn-custom-orange:hover { background-color: #ffffff; color: var(--primary-orange); border-color: var(--primary-orange); } */
+
+.btn-custom-orange:hover { 
+    background-image: none;
+    background-color: transparent;
+    border: 2px solid var(--primary-orange);
+    box-sizing: border-box;
+    background-color: white; 
+    color: var(--primary-orange);
+    border-radius: 6px;
+    transition: ease;
+    /*box-shadow: 0 5px 15px rgba(141, 208, 252, 0.4);*/
+}
+
+.btn-custom-outline {
+    background-color: transparent; color: var(--text-dark); padding: 12px 30px;
+    font-weight: 600; border: 2px solid #ccc; text-transform: uppercase;
+    border-radius: 4px; transition: all 0.3s ease; letter-spacing: 1px;
+}
+.btn-custom-outline:hover { border-color: var(--text-dark); background-color: var(--text-dark); color: white; }
+
+
+/* Feature Boxes in About Section */
+.feature-box {
+    padding: 25px;
+    border-radius: 12px;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+.feature-box:hover {
+    transform: translateY(-5px);
+}
+
+/* The 4 Background Colors */
+.bg-color-1 { background-color: #ffedea; } /* Soft Red/Pink */
+.bg-color-2 { background-color: #e3f2fd; } /* Soft Blue */
+.bg-color-3 { background-color: #e8f5e9; } /* Soft Green */
+.bg-color-4 { background-color: #fff8e1; } /* Soft Yellow */
+
+
+
+/* -----------------------------------------------------------
+   PORTFOLIO GRID
+----------------------------------------------------------- */
+.portfolio-filters { 
+    margin-bottom: 40px; 
+    text-align: left; /* Aligned left */
+}
+.filter-btn {
+    background: none; border: none; color: var(--text-grey); 
+    margin: 0 20px 0 0; /* Right margin only for left flow */
+    font-weight: 600; font-size: 0.9rem; padding-bottom: 2px; cursor: pointer; 
+    border-bottom: 2px solid transparent; transition: 0.3s;
+}
+.filter-btn.active, .filter-btn:hover { color: var(--text-dark); border-bottom-color: var(--primary-orange); }
+
+.portfolio-box {
+    position: relative;
+    background-color: #eee;
+    aspect-ratio: 16/9; 
+    overflow: hidden; 
+    cursor: pointer; 
+    margin-bottom: 10px;
+}
+
+.portfolio-item.illustration .portfolio-box,
+.portfolio-item.social .portfolio-box,
+.portfolio-item.print .portfolio-box {
+    aspect-ratio: 1 / 1;
+}
+
+.portfolio-box img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.hover-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures it covers the area without stretching */
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none; /* Allows clicks to go through to the parent box */
+}
+
+/* When the video is ready and the user hovers, show it */
+.portfolio-box:hover .hover-video {
+    opacity: 1;
+}
+
+/* Ensure the overlay stays on top of the video */
+.video-overlay {
+    z-index: 2;
+}
+
+.portfolio-box:hover img { transform: scale(1.1); }
+
+/* Video Play Overlay */
+.video-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s ease;
+}
+.portfolio-box:hover .video-overlay { background: rgba(0, 0, 0, 0.1); }
+.play-icon { font-size: 3rem; color: white; opacity: 0.8; transition: transform 0.3s ease; }
+.portfolio-box:hover .play-icon { transform: scale(1.2); opacity: 1; }
+
+/* -----------------------------------------------------------
+   SKILLS & CONTACT
+----------------------------------------------------------- */
+.skill-box { 
+    width: 300px; height: 40px; 
+    background-color: #e9ecef; 
+    border-radius: 8px; 
+    margin: 0 15px 15px 0; /* Margin adjustment for left alignment */
+    display: inline-flex; 
+    align-items: center; justify-content: center;
+    font-weight: bold; color: #888;
+}
+.contact-icon { color: var(--primary-orange); margin-right: 15px; width: 25px; text-align: center; }
+.contact-info p { margin-bottom: 15px; font-weight: 500; font-size: 1.1rem; display: flex; align-items: center; }
+
+#skill-box-specific {
+    margin-bottom: 80px;
+}
+
+/* -----------------------------------------------------------
+   MODALS (Lightbox & Video)
+----------------------------------------------------------- */
+.modal-fullscreen .modal-content { background-color: rgba(0, 0, 0, 0.95); }
+.btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
+.carousel-item { height: 90vh; text-align: center; }
+.carousel-item img {
+    max-height: 100%; max-width: 100%; width: auto; height: auto;
+    object-fit: contain; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ratio-16x9 { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
+.ratio-16x9 iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+/* -----------------------------------------------------------
+   VIDEO MODAL CUSTOMIZATION
+----------------------------------------------------------- */
+
+/* Remove the black background container */
+#videoModal .modal-content {
+    background-color: transparent !important;
+    border: none;
+}
+
+/* Position the header (close button) absolutely so it floats */
+#videoModal .modal-header {
+    position: absolute;
+    top: -40px;   /* Moves the button just above the video */
+    right: 0;
+    width: 100%;
+    z-index: 1055; /* Ensures it stays on top of the video */
+    border: none;  /* Removes any borders */
+    padding: 0;    /* Removes padding that creates thickness */
+    justify-content: flex-end; /* Aligns button to the right */
+}
+
+/* Adjust the close button size/visibility */
+#videoModal .btn-close {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Adds a small white backing to make it pop */
+    border-radius: 50%; /* Make it circular */
+    padding: 0.5rem;
+    margin: 0;
+}
+
+/* -----------------------------------------------------------
+   BACK TO TOP BUTTON
+----------------------------------------------------------- */
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-orange); /* Uses your blue theme */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    z-index: 9990; /* High z-index, but below modals */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer !important; /* Force cursor usage */
+    
+    /* Animation settings */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+#backToTop:hover {
+    background-color: var(--text-dark); /* Dark hover effect */
+    transform: translateY(-3px);
+}
+
+/* Class to make it visible */
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* -----------------------------------------------------------
+   MOBILE RESPONSIVENESS
+----------------------------------------------------------- */
+.mobile-nav-toggle { display: none; } 
+
+@media (max-width: 991px) {
+    #sidebar { transform: translateX(-100%); } 
+    #sidebar.active { transform: translateX(0); } 
+    
+    #main-content { margin-left: 0; width: 100%; }
+    
+    /* Center align on mobile for better UX, or remove to keep left */
+    section { padding: 80px 20px; text-align: center; align-items: center; }
+    h2.section-title, p.section-desc { text-align: center; margin-left: auto; margin-right: auto; }
+    .portfolio-filters { text-align: center; margin-left:auto; margin-right:auto; margin-bottom:40px; }
+    .filter-btn { margin-left: 0 10px; }
+    .d-flex.justify-content-start { justify-content: center !important; }
+    .contact-info p { justify-content: center; }
+    .hero-name { font-size: 2.5rem; }
+    .btn-group-hero { justify-content: center; display: flex; gap: 10px; flex-wrap: wrap; }
+    
+    /* Hamburger Button */
+    .mobile-nav-toggle {
+        display: block;
+        position: fixed;
+        top: 20px; right: 20px;
+        z-index: 2000;
+        background: var(--primary-orange);
+        color: white;
+        border: none;
+        width: 45px; height: 45px;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+}

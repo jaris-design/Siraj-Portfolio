@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siraj Shakya - Portfolio</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#sidebar-nav" data-bs-offset="100">
+
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-nav-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+        <div>
+            <div class="profile-section">
+                <!-- Placeholder image for profile -->
+                <img src="https://drive.google.com/thumbnail?id=1CpQXs6iAhYh54JAYBgxNQiyMS67-ehRv" alt="Siraj Shakya" class="profile-img">
+                <h1 class="profile-name"><a href="#home">Siraj Shakya</a></h1>
+                <span class="profile-role">2D Animator & Illustrator</span>
+            </div>
+
+            <nav id="sidebar-nav">
+                <ul>
+                    <li><a class="nav-link active" href="#home" onclick="closeMobileMenu()">Home</a></li>
+                    <li><a class="nav-link" href="#about" onclick="closeMobileMenu()">About</a></li>
+                    <li><a class="nav-link" href="#portfolio" onclick="closeMobileMenu()">Portfolio</a></li>
+                    <li><a class="nav-link" href="#skills" onclick="closeMobileMenu()">Skills</a></li>
+                    <li><a class="nav-link" href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="social-icons-sidebar mb-3">
+                <a href="https://www.linkedin.com/in/sirajshakya"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                <a href="https://www.instagram.com/siraj.shakya"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="https://www.youtube.com/@siraj.shakya"><i class="fab fa-youtube fa-lg"></i></a>
+            </div>
+            <p>&copy; 2024 Siraj Shakya<br>All rights reserved</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+        
+        <!-- HERO -->
+        <section id="home">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 animate-on-scroll">
+                        <p class="hero-small">Hello, I'm</p>
+                        <h1 class="hero-name">Siraj Shakya</h1>
+                        <p class="hero-text">I transform ideas into <em>dynamic visual experiences</em> through <strong>Design</strong> and <strong>Motion</strong>. Specializing in character animation and brand storytelling.</p>
+                        <div class="btn-group-hero">
+                            <a href="#contact" class="btn btn-custom-orange me-3">CONTACT ME</a>
+                            <!-- CV Link -->
+                            <a href="https://drive.google.com/uc?export=download&id=1wMv8daoZmjczeTBwqtzJx09mwX7pAyte" class="btn btn-custom-outline">DOWNLOAD CV</a>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" style="background-color: var(--bg-medium);">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Who am I?</h2>
+                
+                <div class="row animate-on-scroll">
+                    <div class="col-lg-12">
+                        <p class="section-desc">Dynamic self-taught 2D animator and illustrator with a wealth of experience in creating visually compelling designs and animations. Proficient in industry standard software, specializing in transforming concepts into engaging visuals that enhance brand storytelling and audience engagement.</p>
+                    </div>
+                </div>
+                
+                <div class="row text-start mt-4 animate-on-scroll">                    
+                    <!-- Motion -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="feature-box bg-color-2">
+                            <h3 style="text-gradient; font-weight:700;">Motion</h3>
+                            <p style="font-size:0.9rem; margin-bottom: 0;">- 2D Explainer Videos<br>- 2D Motion Graphics<br>- Gif Ads</p>
+                        </div>
+                    </div>
+                    <!-- Design -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="feature-box bg-color-1">
+                            <h3 style="text-gradient; font-weight:700;">Design</h3>
+                            <p style="font-size:0.9rem; margin-bottom: 0;">- 2D Illustrations<br> - Marketing materials for digital & print media</p>
+                        </div>
+                    </div>
+                    <!-- Tools -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="feature-box bg-color-3">
+                            <h3 style="text-gradient; font-weight:700;">Tools</h3>
+                            <p style="font-size:0.9rem; margin-bottom: 0;">- After Effects<br> - Illustrator<br> - Photoshop<br> - Premiere Pro</p>
+                        </div>
+                    </div>
+                    <!-- Others -->
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="feature-box bg-color-4">
+                            <h3 style="text-gradient; font-weight:700;">Others</h3>
+                            <p style="font-size:0.9rem; margin-bottom: 0;">- Visual Storytelling Enthusiast<br>- Knowledge in Photography & Videography</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO -->
+        <section id="portfolio">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Portfolio</h2>
+                
+                <!-- Filters Left Aligned -->
+                <div class="portfolio-filters text-start animate-on-scroll">
+                    <button class="filter-btn active" onclick="filterPortfolio('animation')">Animation</button>
+                    <button class="filter-btn" onclick="filterPortfolio('illustration')">Illustration</button>
+                    <button class="filter-btn" onclick="filterPortfolio('social')">Social Media</button>
+                    <button class="filter-btn" onclick="filterPortfolio('print')">Print</button>
+                </div>
+
+                <div class="row g-2 animate-on-scroll">
+                    <!-- ANIMATION (Vimeo) -->
+                    <div class="col-md-4 col-sm-6 portfolio-item animation">
+                        <div class="portfolio-box" 
+                             onclick="openVimeo('https://vimeo.com/1053318294')" 
+                             data-preview="https://vimeo.com/1053318294">
+                            <img src="" alt="Animation 1">
+                            <div class="video-overlay"><i class="fas fa-play-circle play-icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item animation">
+                        <div class="portfolio-box" onclick="openVimeo('https://vimeo.com/1103119478')"
+                            data-preview="https://vimeo.com/1053318294">
+                            <img src="" alt="Animation 2">
+                            <div class="video-overlay"><i class="fas fa-play-circle play-icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item animation">
+                        <div class="portfolio-box" onclick="openVimeo('https://vimeo.com/1090848551')">
+                            <img src="" alt="Animation 3">
+                            <div class="video-overlay"><i class="fas fa-play-circle play-icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item animation">
+                        <div class="portfolio-box" onclick="openVimeo('https://vimeo.com/1138858740')">
+                            <img src="" alt="Animation 3">
+                            <div class="video-overlay"><i class="fas fa-play-circle play-icon"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 portfolio-item animation">
+                        <div class="portfolio-box" onclick="openVimeo('https://vimeo.com/1062821956')">
+                            <img src="" alt="Animation 3">
+                            <div class="video-overlay"><i class="fas fa-play-circle play-icon"></i></div>
+                        </div>
+                    </div>
+
+                    <!-- SOCIAL POSTS (Images) -->
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1TFLvRB2lERgzKvVWAEKRJb1GCXtJhudE&sz=w800" alt="Social 1">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1ChycA8iOnYoqaBOEGuLKaO3r8_qrX1kt&sz=w800" alt="Social 2">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1K3arew7qljXtvGTVqUCRoglPYWkhu46L&sz=w800" alt="Social 3">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1-fh6krm8CDUpqTf2P1KaYaXXM2tEREEv&sz=w800" alt="Social 4">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1DEd2ozmVHTk-x2hVVV8lXbbvZyh3qnfs&sz=w800" alt="Social 5">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1bzN1jl78gvAref7jrgDod6mB4kbjfR7t&sz=w800" alt="Social 6">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=16Xc3KhjK5hikFCi5X0trtt35SYHQjaeI&sz=w800" alt="Social 5">
+                        </div>                        
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item social">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1QBFOO737Rp0o_0sy5SBxt8mcOUs8pB6r&sz=w800" alt="Social 6">
+                        </div>
+                    </div>
+
+                    <!-- PRINT (Images) -->
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1wdBNUkNCwClZnjLwdAiAc2ft-KIZoVJY&sz=w800" alt="Print 1">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1TuwNQxG-Ypqj7J5KwFIJOxkIxQ6KLLOm&sz=w800" alt="Print 2">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1b8PZqR3mM0AbE9bIYZKAgNG6OSUqIn5u&sz=w800" alt="Print 3">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1rAEAPDsn_qMgCKG-Sn9xZ0NoeZEOQDky&sz=w800" alt="Print 4">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1EUS1e9DMyKC8JOwG3DP6OUZ9w1M5_smm&sz=w800" alt="Print 5">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 portfolio-item print">
+                        <div class="portfolio-box" onclick="openLightbox(this)">
+                            <img src="https://drive.google.com/thumbnail?id=1TuwNQxG-Ypqj7J5KwFIJOxkIxQ6KLLOm&sz=w800" alt="Print 6">
+                        </div>
+                    </div>
+                    
+                    <!-- ILLUSTRATION SECTION -->
+                    <div class="col-md-3 col-sm-6 portfolio-item illustration">
+                        <!-- 'src' is the thumbnail, 'data-full' is the high-res image that opens in lightbox -->
+                        <div class="portfolio-box" 
+                             onclick="openLightbox(this)" 
+                             data-full="https://drive.google.com/thumbnail?id=1TMXkPDSWRgykbcWGkOTlb5pU0a0NmsMl&sz=w3000">
+                            <img src="https://drive.google.com/thumbnail?id=1VjFdha3mhv-uDibmlxzyNBlkCu1vpMra&sz=w800" alt="Illustration 1">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 portfolio-item illustration">
+                        <div class="portfolio-box" 
+                             onclick="openLightbox(this)" 
+                             data-full="https://drive.google.com/thumbnail?id=1TMXkPDSWRgykbcWGkOTlb5pU0a0NmsMl&sz=w3000">
+                            <img src="https://drive.google.com/thumbnail?id=1dScL1RE4mFaBHL00syEmOJb9FRjsYGu3&sz=w800" alt="Illustration 2">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 portfolio-item illustration">
+                        <div class="portfolio-box" 
+                             onclick="openLightbox(this)" 
+                             data-full="https://drive.google.com/thumbnail?id=1f5fh1o-n688g3iAWUIOvwNvrAUtzckEF&sz=w3000">
+                            <img src="https://drive.google.com/thumbnail?id=1tbUaLDlt1NcMxPOp00K7h0V8Rg9ej9S4&sz=w800" alt="Illustration 3">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 portfolio-item illustration">
+                        <div class="portfolio-box" 
+                             onclick="openLightbox(this)" 
+                             data-full="https://drive.google.com/thumbnail?id=1TzevVwJ_NzQy0Kkvc5CFVdydNJAr8JcA&sz=w3000">
+                            <img src="https://drive.google.com/thumbnail?id=1_PfxkRde5ZETgVZEet-5FtnWtwFflKKD&sz=w800" alt="Illustration 4">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 portfolio-item illustration">
+                        <div class="portfolio-box" 
+                             onclick="openLightbox(this)" 
+                             data-full="https://drive.google.com/thumbnail?id=1TVRh2a9phdGkRXSe1kuWjr16OLrtpVQ3&sz=w3000">
+                            <img src="https://drive.google.com/thumbnail?id=1QSBDHqFrMSIwbUC1cTkhgpOIKtamXhDP&sz=w800" alt="Illustration 5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" style="background-color: var(--bg-medium);">
+            <div class="container text-start animate-on-scroll"> <!-- Left Aligned Container -->
+                <h2 class="section-title animate-on-scroll">My Skills</h2>
+                <!-- Flex start for Left Aligned Icons -->
+                <div class="d-flex justify-content-start flex-wrap mt-4 animate-on-scroll">
+                    <div class="skill-box">Photoshop</div>
+                    <div class="skill-box">Illustrator</div>
+                    <div class="skill-box">After Effects</div>
+                    <div class="skill-box">Premiere Pro</div>
+                    <div class="skill-box">Audition</div>
+                    <div class="skill-box"><center>Duik Angela</center></div>
+                    <div class="skill-box"><center>Limber 2</center></div>
+                    <div class="skill-box"><center>Joysticks & Sliders</center></div>
+                    <div class="skill-box" id="skill-box-specific"><center>Trapcode Suite Particular</center></div>                                        
+                </div>
+            </div>
+
+            <div class="container text-start animate-on-scroll"> <!-- Left Aligned Container -->
+                <h2 class="section-title animate-on-scroll">Addtional Competencies</h2>
+                <!-- Flex start for Left Aligned Icons -->
+                <div class="d-flex justify-content-start flex-wrap mt-4 animate-on-scroll">
+                    <div class="row animate-on-scroll">
+                        <div class="col-lg-12">
+                            <p class="section-desc">Possessing a strong theoretical foundation in photography and videography, I am currently transitioning my knowledge into practical application.</p>
+                        </div>
+                    </div>                                        
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="container text-start"> <!-- Left Aligned Container -->
+                <h2 class="section-title animate-on-scroll">Get In Touch</h2>
+                <p class="section-desc animate-on-scroll">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+                
+                <div class="row animate-on-scroll">
+                    <div class="col-md-8">
+                        <div class="contact-info">
+                            <p><i class="fas fa-envelope contact-icon"></i> <a href="mailto:sirajmshakya@gmail.com" style="text-decoration:none; color:inherit;">sirajdesign96@gmail.com</a></p>
+                            <p><i class="fas fa-envelope contact-icon"></i> <a href="mailto:sirajmshakya@gmail.com" style="text-decoration:none; color:inherit;">sirajmshakya@gmail.com</a></p>
+                            <!-- <p><i class="fas fa-phone contact-icon"></i> +977 98XXXXXXXX</p> -->
+                            <p><i class="fas fa-map-marker-alt contact-icon"></i> Kathmandu, Nepal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border-0 position-absolute w-100" style="z-index:1060;">
+                    <button type="button" class="btn-close btn-close-white ms-auto me-4 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="carouselLightbox" class="carousel slide h-100" data-bs-interval="false">
+                        <div class="carousel-inner h-100" id="lightboxInner">
+                            <!-- Slides Injected via JS -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselLightbox" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselLightbox" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO MODAL -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background-color: #000;">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio-16x9">
+                        <iframe id="videoFrame" src="" allowfullscreen allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div id="custom-cursor">
+        <!-- A sharp, minimalist triangle (arrowhead) -->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L2.5 2.5L2.5 17.5H17.5Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+    <button id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>  
+
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+
+</body>
+</html>
