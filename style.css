@@ -465,12 +465,34 @@ p.section-desc {
     /* Center align on mobile for better UX, or remove to keep left */
     section { padding: 80px 20px; text-align: center; align-items: center; }
     h2.section-title, p.section-desc { text-align: center; margin-left: auto; margin-right: auto; }
-    .portfolio-filters { text-align: center; margin-left:auto; margin-right:auto; margin-bottom:40px; }
-    .filter-btn { margin-left: 0 10px; }
+    .portfolio-filters {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px; /* Uniform spacing */
+        margin-bottom: 40px;
+    }
+    .filter-btn {
+        margin: 0 !important; /* Overrides the 20px right margin from desktop */
+        padding: 5px 10px;
+    }
     .d-flex.justify-content-start { justify-content: center !important; }
     .contact-info p { justify-content: center; }
     .hero-name { font-size: 2.5rem; }
-    .btn-group-hero { justify-content: center; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-group-hero {
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+        gap: 15px; /* Spacing between buttons without using margins */
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    /* Remove the bootstrap margin-end specifically on mobile */
+    .btn-group-hero .btn {
+        margin: 0 !important; 
+    }
     
     /* Hamburger Button */
     .mobile-nav-toggle {
