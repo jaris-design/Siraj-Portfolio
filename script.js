@@ -296,3 +296,29 @@ function scrollToTop() {
         });
     /* } */
 }
+
+// Function to handle the scroll reveal animation
+const scrollReveal = () => {
+    const observerOptions = {
+        threshold: 0.15 // Triggers when 15% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: Stop observing after it's visible to keep it there
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    // Target all elements with the animate-on-scroll class
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(el => observer.observe(el));
+};
+
+// Initialize once the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    scrollReveal();
+});
