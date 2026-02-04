@@ -457,6 +457,26 @@ p.section-desc {
 .mobile-nav-toggle { display: none; } 
 
 @media (max-width: 991px) {
+
+    /* 1. Completely hide the custom cursor element */
+    #custom-cursor {
+        display: none !important;
+    }
+    /* 2. Restore the standard system cursor for the page */
+    html, body {
+        cursor: auto !important;
+    }
+
+    /* 3. Restore the 'pointer' (hand) cursor for all interactive elements */
+    a, 
+    button, 
+    .portfolio-box, 
+    .filter-btn, 
+    .nav-link, 
+    #backToTop {
+        cursor: pointer !important;
+    }
+
     #sidebar { transform: translateX(-100%); } 
     #sidebar.active { transform: translateX(0); } 
     
