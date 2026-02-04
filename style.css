@@ -465,6 +465,12 @@ p.section-desc {
     /* Center align on mobile for better UX, or remove to keep left */
     section { padding: 80px 20px; text-align: center; align-items: center; }
     h2.section-title, p.section-desc { text-align: center; margin-left: auto; margin-right: auto; }
+    h2.section-title { 
+        font-size: 1.8rem; /* Scale down from 2.5rem to 1.8rem */
+        text-align: center; 
+        margin-left: auto; 
+        margin-right: auto; 
+    }
     .portfolio-filters {
         text-align: center;
         display: flex;
