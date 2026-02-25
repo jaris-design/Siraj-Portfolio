@@ -434,8 +434,8 @@ body {
 
 /* --- SCROLL REVEAL ANIMATIONS --- */
 /* Elements start slightly lower and invisible */
+/* 1. Default state (visible) for safety/JS disabled */
 .animate-on-scroll {
-    .animate-on-scroll {
     opacity: 1; 
     transform: none;
 }
