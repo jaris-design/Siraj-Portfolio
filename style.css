@@ -435,7 +435,13 @@ body {
 /* --- SCROLL REVEAL ANIMATIONS --- */
 /* Elements start slightly lower and invisible */
 .animate-on-scroll {
-    opacity: 0;
+    .animate-on-scroll {
+    opacity: 1; 
+    transform: none;
+}
+
+.animate-on-scroll {
+    opacity: 0; /* This hides it initially */
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     will-change: opacity, transform;
@@ -453,25 +459,6 @@ body {
 .mobile-nav-toggle { display: none; } 
 
 @media (max-width: 991px) {
-
-    /* 1. Completely hide the custom cursor element */
-    #custom-cursor {
-        display: none !important;
-    }
-    /* 2. Restore the standard system cursor for the page */
-    html, body {
-        cursor: auto !important;
-    }
-
-    /* 3. Restore the 'pointer' (hand) cursor for all interactive elements */
-    a, 
-    button, 
-    .portfolio-box, 
-    .filter-btn, 
-    .nav-link, 
-    #backToTop {
-        cursor: pointer !important;
-    }
 
     #sidebar { transform: translateX(-100%); } 
     #sidebar.active { transform: translateX(0); } 
