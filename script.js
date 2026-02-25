@@ -1,5 +1,3 @@
-// Custom cursor code was here
-
 // -------------------------
 // 1. Sidebar & Mobile Logic
 // -------------------------
@@ -52,16 +50,17 @@ function filterPortfolio(category) {
     items.forEach(item => {
         if (item.classList.contains(category)) {
             item.style.display = 'block';
-            item.classList.add('visible-item'); 
+            // Slight delay to allow display:block to apply before opacity transition
+            setTimeout(() => item.classList.add('visible-item'), 10);
         } else {
-            item.style.display = 'none';
             item.classList.remove('visible-item');
+            item.style.display = 'none';
         }
     });
 }
 
 // -------------------------
-// 3. Auto-Fetch Video Thumbnails
+// 3. Auto-Fetch Video Thumbnails & Init
 // -------------------------
 window.addEventListener('DOMContentLoaded', function() {
     const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="vimeo.com"]');
@@ -77,7 +76,11 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Initialize Portfolio
     filterPortfolio('animation');
+    
+    // Initialize Animations
+    scrollReveal();
 });
 
 // -------------------------
@@ -91,58 +94,48 @@ document.addEventListener('DOMContentLoaded', () => {
         let video = null;
 
         box.addEventListener('mouseenter', () => {
-            // 1. Create video element if it doesn't exist
             if (!video) {
                 video = document.createElement('video');
                 video.src = videoUrl;
                 video.muted = true;
                 video.loop = true;
-                video.playsInline = true; // Required for mobile
+                video.playsInline = true;
                 video.classList.add('hover-video');
                 box.appendChild(video);
             }
             
-            // 2. Play the video
             const playPromise = video.play();
             if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Autoplay prevented");
-                });
+                playPromise.catch(error => { console.log("Autoplay prevented"); });
             }
         });
 
         box.addEventListener('mouseleave', () => {
-            if (video) {
-                video.pause();
-                // Optional: video.currentTime = 0; // Reset to beginning
-            }
+            if (video) video.pause();
         });
     });
 });
 
 // -------------------------
-// 4. Lightbox (Images) Logic
+// 5. Lightbox (Images) Logic
 // -------------------------
 function openLightbox(element) {
     const lightboxInner = document.getElementById('lightboxInner');
-    lightboxInner.innerHTML = ''; // Clear existing slides
+    lightboxInner.innerHTML = ''; 
 
-    // 1. Get all visible portfolio items of the current filter
-    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('onclick').match(/'(.*?)'/)[1];
+    const activeFilterBtn = document.querySelector('.filter-btn.active');
+    // Safety check if no filter is active
+    const activeFilter = activeFilterBtn 
+        ? activeFilterBtn.getAttribute('onclick').match(/'(.*?)'/)[1] 
+        : 'animation';
+
     const items = document.querySelectorAll(`.portfolio-item.${activeFilter}`);
-
-    let activeIndex = 0;
 
     items.forEach((item, index) => {
         const box = item.querySelector('.portfolio-box');
-        
-        // PRIORITY: Use data-full if it exists, otherwise use the thumbnail src
         const fullImgUrl = box.getAttribute('data-full') || box.querySelector('img').src;
-        
         const isActive = (box === element) ? 'active' : '';
-        if (box === element) activeIndex = index;
 
-        // Add slide to carousel
         lightboxInner.innerHTML += `
             <div class="carousel-item ${isActive}">
                 <img src="${fullImgUrl}" class="d-block" alt="Portfolio Image">
@@ -150,13 +143,12 @@ function openLightbox(element) {
         `;
     });
 
-    // 2. Show the Modal
     const lightboxModal = new bootstrap.Modal(document.getElementById('lightboxModal'));
     lightboxModal.show();
 }
 
 // -------------------------
-// 5. Video Modal Logic
+// 6. Video Modal Logic
 // -------------------------
 const videoModalEl = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
@@ -177,73 +169,54 @@ function openVimeo(standardUrl) {
     }
 }
 
-videoModalEl.addEventListener('hidden.bs.modal', function () {
-    videoFrame.src = ""; 
-});
+if(videoModalEl) {
+    videoModalEl.addEventListener('hidden.bs.modal', function () {
+        videoFrame.src = ""; 
+    });
+}
 
-// Animation Observer
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.2 // Trigger when 20% of the element is visible
+// -------------------------
+// 7. Scroll Reveal Animation
+// -------------------------
+const scrollReveal = () => {
+    const observerOptions = {
+        threshold: 0.1 // Triggers when 10% is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Run once
+            }
+        });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(el => observer.observe(el));
 };
 
-const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target); // Run animation only once
-        }
-    });
-}, observerOptions);
-
-// Select all elements to animate
-document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-    observer.observe(el);
-});
-
 // -------------------------
-// 6. Lenis Logic
+// 8. Lenis Smooth Scroll
 // -------------------------
-
-// Initialize Lenis
 const lenis = new Lenis();
 
-// Use requestAnimationFrame to update Lenis on every frame
 function raf(time) {
   lenis.raf(time);
   requestAnimationFrame(raf);
 }
-
 requestAnimationFrame(raf);
 
-// Optional: Log scroll position (for testing)
-lenis.on('scroll', (e) => {
-  // console.log(e);
-});
-
-// 1. FORCE SCROLL TO TOP ON REFRESH
-if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
-}
-
-window.onload = function() {
-    window.scrollTo(0, 0);
-};
-
-// 2. BACK TO TOP BUTTON LOGIC
+// -------------------------
+// 9. Back To Top
+// -------------------------
 const backToTopBtn = document.getElementById("backToTop");
 const skillsSection = document.getElementById("skills");
 
 window.addEventListener("scroll", () => {
-    if (!skillsSection) return;
+    if (!skillsSection || !backToTopBtn) return;
 
-    // Get the distance of the Skills section from the top of the page
     const skillsPosition = skillsSection.offsetTop;
-    // Get the current scroll position
-    const currentScroll = window.scrollY + (window.innerHeight / 2); // Trigger when skills is halfway up
-
-    // Logic: If we have scrolled past the start of the skills section
     if (window.scrollY >= (skillsPosition - window.innerHeight / 2)) {
         backToTopBtn.classList.add("show");
     } else {
@@ -252,39 +225,13 @@ window.addEventListener("scroll", () => {
 });
 
 function scrollToTop() {
-    // If you are using Lenis (smooth scroll), use this:
-    /* if (typeof lenis !== 'undefined') {
-        lenis.scrollTo(0);
-    } else { */
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    /* } */
+    lenis.scrollTo(0);
 }
 
-// Function to handle the scroll reveal animation
-const scrollReveal = () => {
-    const observerOptions = {
-        threshold: 0.15 // Triggers when 15% of the element is visible
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                // Optional: Stop observing after it's visible to keep it there
-                // observer.unobserve(entry.target); 
-            }
-        });
-    }, observerOptions);
-
-    // Target all elements with the animate-on-scroll class
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    elements.forEach(el => observer.observe(el));
+// Force scroll to top on refresh
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+window.onload = function() {
+    window.scrollTo(0, 0);
 };
-
-// Initialize once the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    scrollReveal();
-});
