@@ -18,37 +18,7 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Hide default cursor */
-html, body, a, button, .portfolio-box, .filter-btn {
-    cursor: none !important;
-}
-
-/* -----------------------------------------------------------
-   CUSTOM CURSOR (Static)
------------------------------------------------------------ */
-
-/* Hide default cursor on all elements */
-html, body, a, button, .portfolio-box, .filter-btn {
-    cursor: none !important;
-}
-
-#custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 24px; 
-    height: 24px;
-    color: var(--primary-orange); /* Arrow color */
-    pointer-events: none; /* Allows clicks to go through the arrow */
-    z-index: 9999;
-    
-    /* Center the SVG inside the div */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* REMOVED: transition, transform: scale, and animation properties */
-}
+/* Custom Cursor code was here */
 
 /*:root {
     --primary-orange: #2B81E4;
