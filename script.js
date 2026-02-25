@@ -1,26 +1,3 @@
-// 1. Capture mouse position as fast as the browser sends it
-window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-// 2. Update the cursor position using requestAnimationFrame
-// This syncs the movement with your screen's refresh rate
-function updateCursor() {
-    // To make it feel "stuck" to the mouse (Zero Lag):
-    cursorX = mouseX;
-    cursorY = mouseY;
-
-    // Apply the position
-    // We use rotate(-15deg) here to keep the pointer angle
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) rotate(-15deg)`;
-
-    requestAnimationFrame(updateCursor);
-}
-
-// Start the loop
-updateCursor();
-
 // 3. Keep your hover logic (unchanged)
 const hoverElements = document.querySelectorAll('a, button, .portfolio-box, .filter-btn, .skill-box');
 hoverElements.forEach(el => {
