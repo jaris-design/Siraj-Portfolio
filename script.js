@@ -1,9 +1,3 @@
-const cursor = document.getElementById('custom-cursor');
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
-
 // 1. Capture mouse position as fast as the browser sends it
 window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
