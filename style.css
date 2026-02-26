@@ -487,6 +487,11 @@ body {
     }
     .d-flex.justify-content-start { justify-content: center !important; }
     .contact-info p { justify-content: center; }
+    #contact .col-md-8 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
     .hero-name { font-size: 2.5rem; }
     .btn-group-hero {
         display: flex;
