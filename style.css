@@ -522,3 +522,26 @@ body {
         cursor: pointer;
     }
 }
+
+/* --- Feature Box List Alignment --- */
+.feature-box ul {
+    list-style: none;      /* Remove default bullets */
+    padding-left: 0;       /* Remove default padding */
+    margin-bottom: 0;      /* Remove bottom margin */
+}
+
+.feature-box li {
+    position: relative;    /* allows us to position the hyphen */
+    padding-left: 15px;    /* push text right to make room for hyphen */
+    margin-bottom: 5px;    /* space between items */
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Add the hyphen automatically */
+.feature-box li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    font-weight: 500;
+}
