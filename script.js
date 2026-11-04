@@ -85,16 +85,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Navbar link clicking
-    navLinks.forEach((link) => {
+    // Listen to ALL internal hash links (Navbar + "CONTACT ME" button + logo)
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    internalLinks.forEach((link) => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('data-target');
+            const href = link.getAttribute('href');
+            if (!href || href === '#') return;
+            
+            const targetId = href.substring(1);
             const targetIdx = sections.findIndex(sec => sec.getAttribute('id') === targetId);
+            
             if (targetIdx !== -1) {
+                e.preventDefault();
                 goToPage(targetIdx);
+                document.getElementById('navMenu')?.classList.remove('open');
             }
-            document.getElementById('navMenu')?.classList.remove('open');
         });
     });
 
