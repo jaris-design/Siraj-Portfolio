@@ -1,229 +1,237 @@
-document.addEventListener('DOMContentLoaded', () => {
+// -------------------------
+// 1. Sidebar & Mobile Logic
+// -------------------------
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+}
 
-    // -------------------------------------------------------------
-    // 1. Full-Page Crossfade & Depth Scale Navigation Controller
-    // -------------------------------------------------------------
-    const sections = Array.from(document.querySelectorAll('.snap-section'));
-    const navLinks = document.querySelectorAll('.nav-link');
-    let currentIndex = 0;
-    let isTransitioning = false;
-    const TRANSITION_DURATION = 700; // ms
-
-    function goToPage(index) {
-        if (index < 0 || index >= sections.length) return;
-        if (index === currentIndex && sections[currentIndex].classList.contains('active-page')) return;
-        
-        isTransitioning = true;
-
-        // Transition active state between pages
-        sections[currentIndex].classList.remove('active-page');
-        currentIndex = index;
-        sections[currentIndex].classList.add('active-page');
-
-        // Update Navbar link highlighting
-        const activeId = sections[currentIndex].getAttribute('id');
-        navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('data-target') === activeId);
-        });
-
-        setTimeout(() => {
-            isTransitioning = false;
-        }, TRANSITION_DURATION);
+function closeMobileMenu() {
+    if (window.innerWidth < 992) {
+        document.getElementById('sidebar').classList.remove('active');
     }
+}
 
-    // Initialize first page as active
-    sections.forEach((sec, idx) => {
-        if (idx === 0) sec.classList.add('active-page');
-        else sec.classList.remove('active-page');
-    });
+// Active Link Highlight on Scroll
+const sections = document.querySelectorAll("section");
+const navLi = document.querySelectorAll("#sidebar .nav-link");
 
-    // Trackpad & Mouse Wheel listener
-    window.addEventListener('wheel', (e) => {
-        // If scrolling inside the Portfolio gallery, allow internal scroll until boundary
-        const portfolioScroll = document.querySelector('.portfolio-scroll-window');
-        if (portfolioScroll && portfolioScroll.contains(e.target)) {
-            const atTop = portfolioScroll.scrollTop === 0;
-            const atBottom = Math.abs(portfolioScroll.scrollHeight - portfolioScroll.clientHeight - portfolioScroll.scrollTop) <= 2;
-            
-            if (!atTop && e.deltaY < 0) return;
-            if (!atBottom && e.deltaY > 0) return;
-        }
-
-        if (isTransitioning) return;
-
-        if (e.deltaY > 25) {
-            goToPage(currentIndex + 1);
-        } else if (e.deltaY < -25) {
-            goToPage(currentIndex - 1);
-        }
-    }, { passive: true });
-
-    // Touch events for mobile swiping
-    let touchStartY = 0;
-    window.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    window.addEventListener('touchend', (e) => {
-        if (isTransitioning) return;
-        const touchEndY = e.changedTouches[0].clientY;
-        const diff = touchStartY - touchEndY;
-
-        if (Math.abs(diff) > 45) {
-            if (diff > 0) goToPage(currentIndex + 1);
-            else goToPage(currentIndex - 1);
-        }
-    }, { passive: true });
-
-    // Keyboard Arrow navigation
-    window.addEventListener('keydown', (e) => {
-        if (isTransitioning) return;
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-            goToPage(currentIndex + 1);
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            goToPage(currentIndex - 1);
+window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+            current = section.getAttribute("id");
         }
     });
 
-    // Listen to ALL internal hash links (Navbar + "CONTACT ME" button + logo)
-    const internalLinks = document.querySelectorAll('a[href^="#"]');
-    internalLinks.forEach((link) => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (!href || href === '#') return;
+    navLi.forEach((li) => {
+        li.classList.remove("active");
+        if (li.getAttribute("href").includes(current)) {
+            li.classList.add("active");
+        }
+    });
+});
+
+// -------------------------
+// 2. Portfolio Filter Logic
+// -------------------------
+function filterPortfolio(category) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.portfolio-item');
+    
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.getAttribute('onclick').includes(`'${category}'`)) {
+            btn.classList.add('active');
+        }
+    });
+
+    items.forEach(item => {
+        if (item.classList.contains(category)) {
+            item.style.display = 'block';
+            // Slight delay to allow display:block to apply before opacity transition
+            setTimeout(() => item.classList.add('visible-item'), 10);
+        } else {
+            item.classList.remove('visible-item');
+            item.style.display = 'none';
+        }
+    });
+}
+
+// -------------------------
+// 3. Auto-Fetch Video Thumbnails & Init
+// -------------------------
+window.addEventListener('DOMContentLoaded', function() {
+    const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="vimeo.com"]');
+    
+    videoBoxes.forEach(box => {
+        const clickAttr = box.getAttribute('onclick');
+        const idMatch = clickAttr.match(/vimeo\.com\/(\d+)/);
+        
+        if (idMatch && idMatch[1]) {
+            const vimeoId = idMatch[1];
+            const img = box.querySelector('img');
+            if (img) img.src = `https://vumbnail.com/${vimeoId}_large.jpg`;
+        }
+    });
+
+    // Initialize Portfolio
+    filterPortfolio('animation');
+    
+    // Initialize Animations
+    scrollReveal();
+});
+
+// -------------------------
+// 4. Handles the "Create, Play, and Pause" logic
+// -------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const boxes = document.querySelectorAll('.portfolio-box[data-preview]');
+
+    boxes.forEach(box => {
+        const videoUrl = box.getAttribute('data-preview');
+        let video = null;
+
+        box.addEventListener('mouseenter', () => {
+            if (!video) {
+                video = document.createElement('video');
+                video.src = videoUrl;
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.classList.add('hover-video');
+                box.appendChild(video);
+            }
             
-            const targetId = href.substring(1);
-            const targetIdx = sections.findIndex(sec => sec.getAttribute('id') === targetId);
-            
-            if (targetIdx !== -1) {
-                e.preventDefault();
-                goToPage(targetIdx);
-                document.getElementById('navMenu')?.classList.remove('open');
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => { console.log("Autoplay prevented"); });
             }
         });
-    });
 
-    // -------------------------------------------------------------
-    // 2. Minimalist Theme Switcher (Dark / Light)
-    // -------------------------------------------------------------
-    const themeToggle = document.getElementById('theme-toggle');
-    const root = document.documentElement;
-
-    themeToggle?.addEventListener('click', () => {
-        const currentTheme = root.getAttribute('data-theme') || 'dark';
-        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', nextTheme);
-        themeToggle.textContent = nextTheme === 'dark' ? 'Light' : 'Dark';
-    });
-
-    // -------------------------------------------------------------
-    // 3. Mobile Navigation Menu Toggle
-    // -------------------------------------------------------------
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navMenu = document.getElementById('navMenu');
-
-    mobileToggle?.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
-    });
-
-    // -------------------------------------------------------------
-    // 4. Portfolio Category Filtering
-    // -------------------------------------------------------------
-    const filterPills = document.querySelectorAll('.filter-pill');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-    filterPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            filterPills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-
-            const filterValue = pill.getAttribute('data-filter');
-
-            portfolioItems.forEach(item => {
-                const itemCategory = item.getAttribute('data-category');
-                if (filterValue === itemCategory) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-
-            // Reset internal scroll window to top upon filter switch
-            document.querySelector('.portfolio-scroll-window')?.scrollTo({ top: 0 });
+        box.addEventListener('mouseleave', () => {
+            if (video) video.pause();
         });
     });
-
-    // Trigger initial filter on Animation
-    const defaultPill = document.querySelector('.filter-pill[data-filter="animation"]');
-    defaultPill?.click();
 });
 
-// -------------------------------------------------------------
-// 5. Native Video Modal Logic (Vimeo)
-// -------------------------------------------------------------
-const videoModal = document.getElementById('videoModal');
+// -------------------------
+// 5. Lightbox (Images) Logic
+// -------------------------
+function openLightbox(element) {
+    const lightboxInner = document.getElementById('lightboxInner');
+    lightboxInner.innerHTML = ''; 
+
+    const activeFilterBtn = document.querySelector('.filter-btn.active');
+    // Safety check if no filter is active
+    const activeFilter = activeFilterBtn 
+        ? activeFilterBtn.getAttribute('onclick').match(/'(.*?)'/)[1] 
+        : 'animation';
+
+    const items = document.querySelectorAll(`.portfolio-item.${activeFilter}`);
+
+    items.forEach((item, index) => {
+        const box = item.querySelector('.portfolio-box');
+        const fullImgUrl = box.getAttribute('data-full') || box.querySelector('img').src;
+        const isActive = (box === element) ? 'active' : '';
+
+        lightboxInner.innerHTML += `
+            <div class="carousel-item ${isActive}">
+                <img src="${fullImgUrl}" class="d-block" alt="Portfolio Image">
+            </div>
+        `;
+    });
+
+    const lightboxModal = new bootstrap.Modal(document.getElementById('lightboxModal'));
+    lightboxModal.show();
+}
+
+// -------------------------
+// 6. Video Modal Logic
+// -------------------------
+const videoModalEl = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
 
-function openVimeo(vimeoUrl) {
-    const idMatch = vimeoUrl.match(/vimeo.*\/(\d+)/i);
-    if (idMatch && idMatch[1]) {
-        videoFrame.src = `https://player.vimeo.com/video/${idMatch[1]}?autoplay=1`;
-        videoModal.classList.add('open');
-    }
-}
-
-function closeVimeo() {
-    videoFrame.src = "";
-    videoModal.classList.remove('open');
-}
-
-// -------------------------------------------------------------
-// 6. Native Lightbox Modal Logic
-// -------------------------------------------------------------
-const lightboxModal = document.getElementById('lightboxModal');
-const lightboxImg = document.getElementById('lightboxImg');
-let currentActiveImages = [];
-let currentImageIndex = 0;
-
-function openLightbox(cardElement) {
-    const activeCategory = document.querySelector('.filter-pill.active')?.getAttribute('data-filter') || 'illustration';
-    const visibleCards = Array.from(document.querySelectorAll(`.portfolio-item[data-category="${activeCategory}"] .portfolio-box`));
+function openVimeo(standardUrl) {
+    let embedSrc = "";
+    if (standardUrl.includes("vimeo.com")) {
+        const match = standardUrl.match(/vimeo.*\/(\d+)/i);
+        if (match && match[1]) {
+            embedSrc = `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
+        }
+    } 
     
-    currentActiveImages = visibleCards.map(card => card.getAttribute('data-full'));
-    const clickedUrl = cardElement.getAttribute('data-full');
-    currentImageIndex = currentActiveImages.indexOf(clickedUrl);
-
-    if (currentImageIndex === -1) currentImageIndex = 0;
-
-    lightboxImg.src = currentActiveImages[currentImageIndex];
-    lightboxModal.classList.add('open');
-}
-
-function closeLightbox() {
-    lightboxModal.classList.remove('open');
-    lightboxImg.src = '';
-}
-
-function nextImage() {
-    if (currentActiveImages.length === 0) return;
-    currentImageIndex = (currentImageIndex + 1) % currentActiveImages.length;
-    lightboxImg.src = currentActiveImages[currentImageIndex];
-}
-
-function prevImage() {
-    if (currentActiveImages.length === 0) return;
-    currentImageIndex = (currentImageIndex - 1 + currentActiveImages.length) % currentActiveImages.length;
-    lightboxImg.src = currentActiveImages[currentImageIndex];
-}
-
-// Global modal keyboard shortcuts
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeVimeo();
-        closeLightbox();
+    if (embedSrc) {
+        videoFrame.src = embedSrc;
+        const videoModal = new bootstrap.Modal(videoModalEl);
+        videoModal.show();
     }
-    if (lightboxModal.classList.contains('open')) {
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
+}
+
+if(videoModalEl) {
+    videoModalEl.addEventListener('hidden.bs.modal', function () {
+        videoFrame.src = ""; 
+    });
+}
+
+// -------------------------
+// 7. Scroll Reveal Animation
+// -------------------------
+const scrollReveal = () => {
+    const observerOptions = {
+        threshold: 0.1 // Triggers when 10% is visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Run once
+            }
+        });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(el => observer.observe(el));
+};
+
+// -------------------------
+// 8. Lenis Smooth Scroll
+// -------------------------
+const lenis = new Lenis();
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// -------------------------
+// 9. Back To Top
+// -------------------------
+const backToTopBtn = document.getElementById("backToTop");
+const skillsSection = document.getElementById("skills");
+
+window.addEventListener("scroll", () => {
+    if (!skillsSection || !backToTopBtn) return;
+
+    const skillsPosition = skillsSection.offsetTop;
+    if (window.scrollY >= (skillsPosition - window.innerHeight / 2)) {
+        backToTopBtn.classList.add("show");
+    } else {
+        backToTopBtn.classList.remove("show");
     }
 });
+
+function scrollToTop() {
+    lenis.scrollTo(0);
+}
+
+// Force scroll to top on refresh
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+window.onload = function() {
+    window.scrollTo(0, 0);
+};
