@@ -15,14 +15,27 @@
 </head>
 <body data-bs-spy="scroll" data-bs-target="#sidebar-nav" data-bs-offset="100">
 
-    <!-- Mobile Toggle Button -->
-    <button class="mobile-nav-toggle" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </button>
+    <!-- Mobile Top Bar (Theme Toggle & Menu Toggle) -->
+    <div class="mobile-top-bar">
+        <button id="themeToggleMobile" class="theme-toggle-btn mobile-theme-btn" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="mobile-nav-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
 
     <!-- SIDEBAR -->
     <aside id="sidebar">
         <div>
+            <!-- Dark / Light Mode Toggle Button -->
+            <div class="theme-toggle-wrapper">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                    <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
+
             <div class="profile-section">
                 <!-- Placeholder image for profile -->
                 <img src="https://drive.google.com/thumbnail?id=10_9Azlz5OriDjQ9n8ZARfk1Oed-X0nIo" alt="Siraj Shakya" class="profile-img">
@@ -43,12 +56,6 @@
 
         <div class="sidebar-footer">
             <div class="social-icons-sidebar mb-3">
-                <!-- <a href="https://www.linkedin.com/in/sirajshakya"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                <a href="https://www.behance.net/sirajshakya96"><i class="fab fa-behance fa-lg"></i></a>
-                <a href="https://www.instagram.com/siraj.shakya"><i class="fab fa-instagram fa-lg"></i></a>
-                <a href="https://www.youtube.com/@siraj.shakya"><i class="fab fa-youtube fa-lg"></i></a>
-                <a href="https://www.tiktok.com/@siraj.shakya"><i class="fab fa-tiktok fa-lg"></i></a> -->
-                <!-- Added target="_blank" and rel="noopener noreferrer" to each link -->
                 <a href="https://www.linkedin.com/in/sirajshakya" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in fa-lg"></i></a>
                 <a href="https://www.behance.net/sirajshakya96" target="_blank" rel="noopener noreferrer"><i class="fab fa-behance fa-lg"></i></a>
                 <a href="https://www.instagram.com/siraj.shakya" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram fa-lg"></i></a>
@@ -81,7 +88,7 @@
         </section>
 
         <!-- ABOUT -->
-        <section id="about" style="background-color: var(--bg-medium);">
+        <section id="about">
             <div class="container">
                 <h2 class="section-title animate-on-scroll">Who am I?</h2>
                 
@@ -197,7 +204,6 @@
 
                     <!-- ILLUSTRATION SECTION -->
                     <div class="col-md-3 col-sm-6 portfolio-item illustration">
-                        <!-- 'src' is the thumbnail, 'data-full' is the high-res image that opens in lightbox -->
                         <div class="portfolio-box" 
                              onclick="openLightbox(this)" 
                              data-full="https://drive.google.com/thumbnail?id=1sGP0epeW7bJnt-_jEUXPpPLF4sYOs9u8&sz=w3000">
@@ -331,10 +337,9 @@
         </section>
 
         <!-- SKILLS -->
-        <section id="skills" style="background-color: var(--bg-medium);">
-            <div class="container text-start animate-on-scroll"> <!-- Left Aligned Container -->
+        <section id="skills">
+            <div class="container text-start animate-on-scroll">
                 <h2 class="section-title animate-on-scroll">My Skills</h2>
-                <!-- Flex start for Left Aligned Icons -->
                 <div class="d-flex justify-content-start flex-wrap mt-4 animate-on-scroll">
                     <div class="skill-box">Photoshop</div>
                     <div class="skill-box">Illustrator</div>
@@ -350,9 +355,8 @@
                 </div>
             </div>
 
-            <div class="container text-start animate-on-scroll"> <!-- Left Aligned Container -->
+            <div class="container text-start animate-on-scroll">
                 <h2 class="section-title animate-on-scroll">Additional Competencies</h2>
-                <!-- Flex start for Left Aligned Icons -->
                 <div class="d-flex justify-content-start flex-wrap mt-4 animate-on-scroll">
                     <div class="row animate-on-scroll">
                         <div class="col-lg-12">
@@ -365,7 +369,7 @@
 
         <!-- CONTACT -->
         <section id="contact">
-            <div class="container text-start"> <!-- Left Aligned Container -->
+            <div class="container text-start">
                 <h2 class="section-title animate-on-scroll">Get In Touch</h2>
                 <p class="section-desc animate-on-scroll">Have a project in mind or want to collaborate? Feel free to reach out!</p>
                 
@@ -374,7 +378,6 @@
                         <div class="contact-info">
                             <p><i class="fas fa-envelope contact-icon"></i> <a href="mailto:sirajmshakya@gmail.com" style="text-decoration:none; color:inherit;">sirajdesign96@gmail.com</a></p>
                             <p><i class="fas fa-envelope contact-icon"></i> <a href="mailto:sirajmshakya@protonmail.com" style="text-decoration:none; color:inherit;">sirajmshakya@protonmail.com</a></p>
-                            <!-- <p><i class="fas fa-phone contact-icon"></i> +977 98XXXXXXXX</p> -->
                             <p><i class="fas fa-map-marker-alt contact-icon"></i> Kathmandu, Nepal</p>
                         </div>
                     </div>
@@ -423,13 +426,13 @@
             </div>
         </div>
     </div>
-        
-    <!-- Custom cursor code was here -->
 
+    <!-- Back to Top Button -->
     <button id="backToTop" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>  
 
+    <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <!-- Bootstrap JS -->
