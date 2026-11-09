@@ -1,4 +1,52 @@
 // -------------------------
+// Theme Toggle Logic
+// -------------------------
+const themeButtons = [
+    document.getElementById('themeToggle'),
+    document.getElementById('themeToggleMobile')
+];
+
+function updateThemeUI(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    themeButtons.forEach(btn => {
+        if (!btn) return;
+        const icon = btn.querySelector('i');
+        const text = btn.querySelector('.theme-text');
+
+        if (theme === 'dark') {
+            if (icon) icon.className = 'fas fa-sun';
+            if (text) text.textContent = 'Light Mode';
+        } else {
+            if (icon) icon.className = 'fas fa-moon';
+            if (text) text.textContent = 'Dark Mode';
+        }
+    });
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    updateThemeUI(initialTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    updateThemeUI(newTheme);
+}
+
+// Attach click events
+themeButtons.forEach(btn => {
+    if (btn) btn.addEventListener('click', toggleTheme);
+});
+
+// Run theme detection immediately on script execution
+initTheme();
+
+// -------------------------
 // 1. Sidebar & Mobile Logic
 // -------------------------
 function toggleSidebar() {
@@ -72,7 +120,24 @@ window.addEventListener('DOMContentLoaded', function() {
         if (idMatch && idMatch[1]) {
             const vimeoId = idMatch[1];
             const img = box.querySelector('img');
-            if (img) img.src = `https://vumbnail.com/${vimeoId}_large.jpg`;
+            
+            // Fetch high-quality thumbnail directly from Vimeo's official API
+            fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    if (img && data.thumbnail_url) {
+                        // Upgrade thumbnail resolution from default 640 to larger preview if available
+                        img.src = data.thumbnail_url.replace(/_\d+x\d+/, '_1280x720');
+                    }
+                })
+                .catch(err => {
+                    console.warn(`Could not load thumbnail for Vimeo ID: ${vimeoId}`, err);
+                    // Fallback to Vumbnail if API fails
+                    if (img) img.src = `https://vumbnail.com/${vimeoId}_large.jpg`;
+                });
         }
     });
 
