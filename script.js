@@ -82,138 +82,62 @@ window.addEventListener("scroll", () => {
 });
 
 // -------------------------
-// 2. Portfolio Filter & Animation Pagination Logic
+// 2. Portfolio Filter Logic
 // -------------------------
-const VIDEOS_PER_PAGE = 6;
-let currentAnimationPage = 1;
-
 function filterPortfolio(category) {
     const buttons = document.querySelectorAll('.filter-btn');
     const items = document.querySelectorAll('.portfolio-item');
-    const paginationEl = document.getElementById('animation-pagination');
     
     buttons.forEach(btn => {
         btn.classList.remove('active');
-        if (btn.getAttribute('onclick').includes(`'${category}'`)) {
+        if(btn.getAttribute('onclick').includes(`'${category}'`)) {
             btn.classList.add('active');
         }
     });
 
-    // Hide all items first
     items.forEach(item => {
-        item.classList.remove('visible-item');
-        item.style.display = 'none';
-    });
-
-    if (category === 'animation') {
-        currentAnimationPage = 1;
-        renderAnimationPage(currentAnimationPage);
-    } else {
-        // Hide pagination for other categories
-        if (paginationEl) paginationEl.style.display = 'none';
-
-        items.forEach(item => {
-            if (item.classList.contains(category)) {
-                item.style.display = 'block';
-                setTimeout(() => item.classList.add('visible-item'), 10);
-            }
-        });
-    }
-}
-
-function renderAnimationPage(page) {
-    const animationItems = Array.from(document.querySelectorAll('.portfolio-item.animation'));
-    const totalPages = Math.ceil(animationItems.length / VIDEOS_PER_PAGE);
-    const paginationEl = document.getElementById('animation-pagination');
-
-    // Clamp page number within valid range
-    currentAnimationPage = Math.max(1, Math.min(page, totalPages));
-
-    const startIndex = (currentAnimationPage - 1) * VIDEOS_PER_PAGE;
-    const endIndex = startIndex + VIDEOS_PER_PAGE;
-
-    // Show only the 6 videos for the current page
-    animationItems.forEach((item, index) => {
-        if (index >= startIndex && index < endIndex) {
+        if (item.classList.contains(category)) {
             item.style.display = 'block';
+            // Slight delay to allow display:block to apply before opacity transition
             setTimeout(() => item.classList.add('visible-item'), 10);
         } else {
             item.classList.remove('visible-item');
             item.style.display = 'none';
         }
     });
-
-    // Show pagination controls only if there is more than 1 page
-    if (paginationEl) {
-        if (totalPages > 1) {
-            paginationEl.style.display = 'flex';
-            updatePaginationUI(totalPages);
-        } else {
-            paginationEl.style.display = 'none';
-        }
-    }
-}
-
-function updatePaginationUI(totalPages) {
-    const prevBtn = document.getElementById('prevPageBtn');
-    const nextBtn = document.getElementById('nextPageBtn');
-    const pageNumbersEl = document.getElementById('pageNumbers');
-    const pageIndicatorEl = document.getElementById('pageIndicator');
-
-    // Update Prev / Next button states
-    prevBtn.disabled = currentAnimationPage === 1;
-    nextBtn.disabled = currentAnimationPage === totalPages;
-
-    // Update text indicator (e.g., "Page 1 of 2")
-    pageIndicatorEl.textContent = `Page ${currentAnimationPage} of ${totalPages}`;
-
-    // Render clickable page number buttons
-    pageNumbersEl.innerHTML = '';
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.className = `page-btn ${i === currentAnimationPage ? 'active' : ''}`;
-        btn.textContent = i;
-        btn.onclick = () => goToAnimationPage(i);
-        pageNumbersEl.appendChild(btn);
-    }
-}
-
-function changeAnimationPage(delta) {
-    goToAnimationPage(currentAnimationPage + delta);
-}
-
-function goToAnimationPage(page) {
-    renderAnimationPage(page);
-    // Smoothly scroll back to the top of the portfolio section
-    const portfolioSection = document.getElementById('portfolio');
-    if (portfolioSection && typeof lenis !== 'undefined') {
-        lenis.scrollTo(portfolioSection);
-    }
-}
-
-// Helper: Extracts the File ID from a Google Drive URL (or returns the raw ID)
-function extractDriveId(urlOrId) {
-    const match = urlOrId.match(/\/d\/([a-zA-Z0-9_-]+)/) || urlOrId.match(/id=([a-zA-Z0-9_-]+)/);
-    return match ? match[1] : urlOrId.trim();
 }
 
 // -------------------------
-// 3. Auto-Fetch Google Drive Video Thumbnails & Init
+// 3. Auto-Fetch Video Thumbnails & Init
 // -------------------------
 window.addEventListener('DOMContentLoaded', function() {
-    const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="openDriveVideo"]');
-
+    const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="vimeo.com"]');
+    
     videoBoxes.forEach(box => {
         const clickAttr = box.getAttribute('onclick');
-        const urlMatch = clickAttr.match(/openDriveVideo\(['"]([^'"]+)['"]\)/);
-
-        if (urlMatch && urlMatch[1]) {
-            const fileId = extractDriveId(urlMatch[1]);
+        const idMatch = clickAttr.match(/vimeo\.com\/(\d+)/);
+        
+        if (idMatch && idMatch[1]) {
+            const vimeoId = idMatch[1];
             const img = box.querySelector('img');
-            if (img && fileId) {
-                // Uses Google Drive's built-in video thumbnail endpoint
-                img.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1280`;
-            }
+            
+            // Fetch high-quality thumbnail directly from Vimeo's official API
+            fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    if (img && data.thumbnail_url) {
+                        // Upgrade thumbnail resolution from default 640 to larger preview if available
+                        img.src = data.thumbnail_url.replace(/_\d+x\d+/, '_1280x720');
+                    }
+                })
+                .catch(err => {
+                    console.warn(`Could not load thumbnail for Vimeo ID: ${vimeoId}`, err);
+                    // Fallback to Vumbnail if API fails
+                    if (img) img.src = `https://vumbnail.com/${vimeoId}_large.jpg`;
+                });
         }
     });
 
@@ -289,21 +213,28 @@ function openLightbox(element) {
 }
 
 // -------------------------
-// 6. Video Modal Logic (Google Drive)
+// 6. Video Modal Logic
 // -------------------------
 const videoModalEl = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
 
-function openDriveVideo(urlOrId) {
-    const fileId = extractDriveId(urlOrId);
-    if (fileId) {
-        videoFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
+function openVimeo(standardUrl) {
+    let embedSrc = "";
+    if (standardUrl.includes("vimeo.com")) {
+        const match = standardUrl.match(/vimeo.*\/(\d+)/i);
+        if (match && match[1]) {
+            embedSrc = `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
+        }
+    } 
+    
+    if (embedSrc) {
+        videoFrame.src = embedSrc;
         const videoModal = new bootstrap.Modal(videoModalEl);
         videoModal.show();
     }
 }
 
-if (videoModalEl) {
+if(videoModalEl) {
     videoModalEl.addEventListener('hidden.bs.modal', function () {
         videoFrame.src = ""; 
     });
