@@ -414,6 +414,61 @@ p.section-desc {
 .portfolio-box:hover img { transform: scale(1.1); }
 
 /* -----------------------------------------------------------
+   PORTFOLIO PAGINATION
+----------------------------------------------------------- */
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.page-btn {
+    background: transparent;
+    color: var(--text-dark);
+    border: 1px solid var(--btn-outline-border);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-btn:hover:not(:disabled) {
+    border-color: var(--primary-orange);
+    color: var(--primary-orange);
+}
+
+.page-btn.active {
+    background-image: var(--primary-gradient);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 6px;
+}
+
+.page-indicator {
+    font-size: 0.85rem;
+    color: var(--text-grey);
+    font-weight: 500;
+    margin-left: 6px;
+}
+
+/* -----------------------------------------------------------
    SKILLS & CONTACT
 ----------------------------------------------------------- */
 .skill-box { 
