@@ -197,37 +197,23 @@ function extractDriveId(urlOrId) {
     return match ? match[1] : urlOrId.trim();
 }
 
-// -------------------------
-// 3. Auto-Fetch Video Thumbnails & Init
+/ -------------------------
+// 3. Auto-Fetch Google Drive Video Thumbnails & Init
 // -------------------------
 window.addEventListener('DOMContentLoaded', function() {
-    const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="vimeo.com"]');
-    
+    const videoBoxes = document.querySelectorAll('.portfolio-box[onclick*="openDriveVideo"]');
+
     videoBoxes.forEach(box => {
         const clickAttr = box.getAttribute('onclick');
-        const idMatch = clickAttr.match(/vimeo\.com\/(\d+)/);
-        
-        if (idMatch && idMatch[1]) {
-            const vimeoId = idMatch[1];
+        const urlMatch = clickAttr.match(/openDriveVideo\(['"]([^'"]+)['"]\)/);
+
+        if (urlMatch && urlMatch[1]) {
+            const fileId = extractDriveId(urlMatch[1]);
             const img = box.querySelector('img');
-            
-            // Fetch high-quality thumbnail directly from Vimeo's official API
-            fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    if (img && data.thumbnail_url) {
-                        // Upgrade thumbnail resolution from default 640 to larger preview if available
-                        img.src = data.thumbnail_url.replace(/_\d+x\d+/, '_1280x720');
-                    }
-                })
-                .catch(err => {
-                    console.warn(`Could not load thumbnail for Vimeo ID: ${vimeoId}`, err);
-                    // Fallback to Vumbnail if API fails
-                    if (img) img.src = `https://vumbnail.com/${vimeoId}_large.jpg`;
-                });
+            if (img && fileId) {
+                // Uses Google Drive's built-in video thumbnail endpoint
+                img.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1280`;
+            }
         }
     });
 
@@ -303,28 +289,21 @@ function openLightbox(element) {
 }
 
 // -------------------------
-// 6. Video Modal Logic
+// 6. Video Modal Logic (Google Drive)
 // -------------------------
 const videoModalEl = document.getElementById('videoModal');
 const videoFrame = document.getElementById('videoFrame');
 
-function openVimeo(standardUrl) {
-    let embedSrc = "";
-    if (standardUrl.includes("vimeo.com")) {
-        const match = standardUrl.match(/vimeo.*\/(\d+)/i);
-        if (match && match[1]) {
-            embedSrc = `https://player.vimeo.com/video/${match[1]}?autoplay=1`;
-        }
-    } 
-    
-    if (embedSrc) {
-        videoFrame.src = embedSrc;
+function openDriveVideo(urlOrId) {
+    const fileId = extractDriveId(urlOrId);
+    if (fileId) {
+        videoFrame.src = `https://drive.google.com/file/d/${fileId}/preview`;
         const videoModal = new bootstrap.Modal(videoModalEl);
         videoModal.show();
     }
 }
 
-if(videoModalEl) {
+if (videoModalEl) {
     videoModalEl.addEventListener('hidden.bs.modal', function () {
         videoFrame.src = ""; 
     });
