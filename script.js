@@ -191,6 +191,12 @@ function goToAnimationPage(page) {
     }
 }
 
+// Helper: Extracts the File ID from a Google Drive URL (or returns the raw ID)
+function extractDriveId(urlOrId) {
+    const match = urlOrId.match(/\/d\/([a-zA-Z0-9_-]+)/) || urlOrId.match(/id=([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : urlOrId.trim();
+}
+
 // -------------------------
 // 3. Auto-Fetch Video Thumbnails & Init
 // -------------------------
