@@ -197,7 +197,7 @@ function extractDriveId(urlOrId) {
     return match ? match[1] : urlOrId.trim();
 }
 
-/ -------------------------
+// -------------------------
 // 3. Auto-Fetch Google Drive Video Thumbnails & Init
 // -------------------------
 window.addEventListener('DOMContentLoaded', function() {
